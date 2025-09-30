@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5, user-scalable=yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Iscrizione alla tua patente</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-image {
+            height: 80px;
+            width: auto;
+        }
+
+        .logo-text h1 {
+            color: #dc2626;
+            font-size: 32px;
+            font-weight: 900;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            letter-spacing: -0.5px;
+            text-align: center;
+        }
+
+        .logo-text p {
+            color: #ef4444;
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 2px;
+            text-align: center;
+        }
+
+        .contact-info {
+            display: flex;
+            gap: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #6b7280;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-item:hover {
+            color: #ef4444;
+        }
+
+        /* Alert Box IMPORTANTE - Ridimensionato */
+        .alert-box {
+            background: linear-gradient(90deg, #fbbf24, #f59e0b);
+            border: 2px solid #dc2626;
+            padding: 15px 20px;
+        }
+
+        .alert-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .alert-icon {
+            color: #dc2626;
+            font-size: 24px;
+        }
+
+        .alert-text {
+            color: #7c2d12;
+            font-weight: 700;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 24px;
+            color: #1f2937;
+            margin-bottom: 25px;
+            font-weight: bold;
+        }
+
+        /* Patent Categories */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid transparent;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .category-card.selected {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        .category-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .gradient-am { background: linear-gradient(90deg, #10b981, #059669); }
+        .gradient-a1 { background: linear-gradient(90deg, #3b82f6, #2563eb); }
+        .gradient-a2 { background: linear-gradient(90deg, #8b5cf6, #7c3aed); }
+        .gradient-a { background: linear-gradient(90deg, #ef4444, #dc2626); }
+        .gradient-b { background: linear-gradient(90deg, #6366f1, #4f46e5); }
+
+        .category-icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .category-name {
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+
+        .category-description {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+
+        .category-age {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        /* Documents Section */
+        .documents-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .documents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .document-item {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            min-height: 80px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .document-item.required {
+            border-color: #fecaca;
+        }
+
+        .document-item:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .document-item:active {
+            transform: scale(0.98);
+        }
+
+        .document-header {
+            display: flex;
+            align-items: start;
+            gap: 15px;
+            min-height: 50px;
+        }
+
+        .document-icon {
+            font-size: 28px;
+            line-height: 1;
+        }
+
+        .document-content {
+            flex: 1;
+        }
+
+        .document-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .document-title {
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        .required-badge {
+            background: #fee2e2;
+            color: #dc2626;
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 12px;
+        }
+
+        .document-description {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .document-details {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f9fafb;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #4b5563;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .document-details.show {
+            display: block;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .info-icon {
+            color: #2563eb;
+            font-size: 20px;
+        }
+
+        .info-text {
+            color: #1e40af;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Schedule and Contacts Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-card-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            color: #1f2937;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .schedule-box {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .schedule-title {
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 15px;
+        }
+
+        .schedule-location {
+            font-size: 14px;
+            color: #dc2626;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .schedule-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #374151;
+        }
+
+        .check-icon {
+            color: #10b981;
+            font-size: 16px;
+        }
+
+        .contact-button {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.3s;
+            margin-bottom: 15px;
+        }
+
+        .contact-button.whatsapp {
+            background: #d1fae5;
+        }
+
+        .contact-button.whatsapp:hover {
+            background: #a7f3d0;
+        }
+
+        .contact-button.email {
+            background: #dbeafe;
+        }
+
+        .contact-button.email:hover {
+            background: #bfdbfe;
+        }
+
+        .contact-button-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        .contact-button.whatsapp .contact-button-icon {
+            background: #10b981;
+        }
+
+        .contact-button.email .contact-button-icon {
+            background: #3b82f6;
+        }
+
+        .contact-button-text {
+            color: #1f2937;
+        }
+
+        .contact-button-title {
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+        .contact-button-info {
+            font-size: 14px;
+        }
+
+        .contact-button-location {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 3px;
+            font-style: italic;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .cta-title {
+            font-size: 36px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .cta-subtitle {
+            font-size: 20px;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            padding: 15px 30px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+            min-width: 200px;
+        }
+
+        .cta-button-main {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cta-button-sub {
+            font-size: 12px;
+            opacity: 0.9;
+            font-weight: normal;
+        }
+
+        .cta-button.primary {
+            background: white;
+            color: #dc2626;
+        }
+
+        .cta-button.primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button.secondary {
+            background: #10b981;
+            color: white;
+        }
+
+        .cta-button.secondary:hover {
+            background: #059669;
+            transform: scale(1.05);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+
+            .contact-info {
+                display: none;
+            }
+
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .category-card {
+                padding: 15px;
+                min-height: 120px;
+            }
+
+            .category-icon {
+                font-size: 30px;
+            }
+
+            .category-name {
+                font-size: 14px;
+            }
+
+            .alert-text {
+                font-size: 14px;
+            }
+
+            .cta-title {
+                font-size: 28px;
+            }
+
+            .cta-subtitle {
+                font-size: 16px;
+            }
+
+            .logo-image {
+                height: 60px;
+            }
+
+            .logo-text h1 {
+                font-size: 24px;
+            }
+
+            .logo-text p {
+                font-size: 14px;
+            }
+
+            .documents-card {
+                padding: 20px;
+            }
+
+            .documents-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .document-item {
+                padding: 15px;
+                min-height: 70px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            .schedule-box {
+                padding: 15px;
+            }
+
+            /* Migliora i pulsanti WhatsApp su mobile */
+            .contact-button {
+                padding: 15px;
+                margin-bottom: 10px;
+            }
+
+            /* Sezione contatti WhatsApp ottimizzata per mobile */
+            div[style*="flex-wrap: wrap"] {
+                flex-direction: column !important;
+            }
+
+            /* Footer mobile */
+            footer {
+                padding: 20px 15px !important;
+            }
+
+            footer p {
+                font-size: 14px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .category-card {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                min-height: 80px;
+            }
+
+            .category-icon {
+                font-size: 24px;
+            }
+
+            .document-icon {
+                font-size: 24px;
+            }
+
+            .logo-text h1 {
+                font-size: 20px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+        }
+
+        /* Touch-friendly per tutti i pulsanti e link */
+        @media (pointer: coarse) {
+            a, button, .category-card, .document-item, .contact-button {
+                min-height: 44px;
+                min-width: 44px;
+            }
+
+            .category-card:active,
+            .document-item:active,
+            .contact-button:active {
+                transform: scale(0.95);
+                opacity: 0.8;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <!-- Logo ABA senza linea rossa -->
+                <svg class="logo-image" viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Lettere ABA -->
+                    <text x="160" y="70" font-family="Arial Black, sans-serif" font-size="75" font-weight="900" fill="#000000" text-anchor="middle">ABA</text>
+                    <!-- Testo AUTOSCUOLE centrato sotto ABA -->
+                    <text x="160" y="100" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#000000" text-anchor="middle">AUTOSCUOLE</text>
+                </svg>
+                <div class="logo-text">
+                    <h1>Iscrizione alla tua patente</h1>
+                    <p>Ecco cosa serve!</p>
+                </div>
+            </div>
+            <div class="contact-info">
+                <!-- Rimosso il contatto email come richiesto -->
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Selezione categoria patente -->
+        <h2 class="section-title">Scegli la tua categoria di patente</h2>
+        
+        <!-- Avviso funzionalità WhatsApp -->
+        <div style="background: linear-gradient(135deg, #e0f2fe, #bae6fd); padding: 12px 18px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #0284c7;">
+            <p style="color: #0c4a6e; font-size: 14px; margin: 0; line-height: 1.5;">
+                <strong>💡 Suggerimento:</strong> Seleziona la patente che ti interessa e quando ci contatterai su WhatsApp, 
+                il messaggio sarà già precompilato con la tua scelta. Potrai poi aggiungere tutte le domande specifiche che desideri!
+            </p>
+        </div>
+        
+        <div class="categories-grid">
+            <div class="category-card" data-category="AM">
+                <div class="category-gradient gradient-am"></div>
+                <div class="category-icon">🛵</div>
+                <div class="category-name">Patente AM</div>
+                <div class="category-description">Ciclomotori 50cc</div>
+                <div class="category-age">Da 14 anni</div>
+            </div>
+            
+            <div class="category-card" data-category="A1">
+                <div class="category-gradient gradient-a1"></div>
+                <div class="category-icon">🏍️</div>
+                <div class="category-name">Patente A1</div>
+                <div class="category-description">Motocicli fino a 125cc</div>
+                <div class="category-age">Da 16 anni</div>
+            </div>
+            
+            <div class="category-card" data-category="A2">
+                <div class="category-gradient gradient-a2"></div>
+                <div class="category-icon">🏍️</div>
+                <div class="category-name">Patente A2</div>
+                <div class="category-description">Motocicli fino a 35kW</div>
+                <div class="category-age">Da 18 anni</div>
+            </div>
+            
+            <div class="category-card" data-category="A">
+                <div class="category-gradient gradient-a"></div>
+                <div class="category-icon">🏍️</div>
+                <div class="category-name">Patente A</div>
+                <div class="category-description">Tutti i motocicli</div>
+                <div class="category-age">Da 24 anni (o 20 con A2 da 2 anni)</div>
+            </div>
+            
+            <div class="category-card selected" data-category="B">
+                <div class="category-gradient gradient-b"></div>
+                <div class="category-icon">🚗</div>
+                <div class="category-name">Patente B</div>
+                <div class="category-description">Autovetture</div>
+                <div class="category-age">Da 18 anni</div>
+            </div>
+        </div>
+
+        <!-- Documenti necessari -->
+        <div class="documents-card">
+            <h2 class="section-title">📋 Documenti necessari per l'iscrizione</h2>
+            
+            <div class="documents-grid">
+                <div class="document-item required" data-doc="foto">
+                    <div class="document-header">
+                        <div class="document-icon">📸</div>
+                        <div class="document-content">
+                            <div class="document-title-row">
+                                <div class="document-title">Foto tessera</div>
+                                <span class="required-badge">Obbligatorio</span>
+                            </div>
+                            <div class="document-description">A sfondo chiaro</div>
+                        </div>
+                        <div style="color: #6b7280; font-size: 20px; margin-left: auto;">▼</div>
+                    </div>
+                    <div class="document-details" id="details-foto">
+                        La foto può essere scattata anche direttamente in sede. Deve avere sfondo chiaro e uniforme.
+                    </div>
+                </div>
+
+                <div class="document-item required" data-doc="tasse">
+                    <div class="document-header">
+                        <div class="document-icon">💶</div>
+                        <div class="document-content">
+                            <div class="document-title-row">
+                                <div class="document-title">€82,50 in contanti</div>
+                                <span class="required-badge">Obbligatorio</span>
+                            </div>
+                            <div class="document-description">Tasse motorizzazione</div>
+                        </div>
+                        <div style="color: #6b7280; font-size: 20px; margin-left: auto;">▼</div>
+                    </div>
+                    <div class="document-details" id="details-tasse">
+                        Importo fisso per le tasse della motorizzazione. Da pagare esclusivamente in contanti.
+                    </div>
+                </div>
+
+                <div class="document-item required" data-doc="certificato-medico">
+                    <div class="document-header">
+                        <div class="document-icon">🏥</div>
+                        <div class="document-content">
+                            <div class="document-title-row">
+                                <div class="document-title">Certificato medico</div>
+                                <span class="required-badge">Obbligatorio</span>
+                            </div>
+                            <div class="document-description">Solo su prenotazione</div>
+                        </div>
+                        <div style="color: #6b7280; font-size: 20px; margin-left: auto;">▼</div>
+                    </div>
+                    <div class="document-details" id="details-certificato-medico">
+                        Il certificato medico deve essere prenotato in anticipo. Validità: 3 mesi dalla data di rilascio.
+                    </div>
+                </div>
+
+                <div class="document-item required" data-doc="anamnestico">
+                    <div class="document-header">
+                        <div class="document-icon">📋</div>
+                        <div class="document-content">
+                            <div class="document-title-row">
+                                <div class="document-title">Certificato anamnestico</div>
+                                <span class="required-badge">Obbligatorio</span>
+                            </div>
+                            <div class="document-description">Dal medico di base</div>
+                        </div>
+                        <div style="color: #6b7280; font-size: 20px; margin-left: auto;">▼</div>
+                    </div>
+                    <div class="document-details" id="details-anamnestico">
+                        Documento rilasciato dal medico di famiglia che attesta l'anamnesi del paziente.
+                    </div>
+                </div>
+
+                <div class="document-item required" data-doc="documenti">
+                    <div class="document-header">
+                        <div class="document-icon">🪪</div>
+                        <div class="document-content">
+                            <div class="document-title-row">
+                                <div class="document-title">Documenti identità</div>
+                                <span class="required-badge">Obbligatorio</span>
+                            </div>
+                            <div class="document-description">Carta identità + Codice fiscale + Patentino (se presente)</div>
+                        </div>
+                        <div style="color: #6b7280; font-size: 20px; margin-left: auto;">▼</div>
+                    </div>
+                    <div class="document-details" id="details-documenti">
+                        <strong style="color: #10b981;">💬 NUOVO: Puoi inviarci le foto dei documenti direttamente su WhatsApp!</strong><br><br>
+                        Opzione 1: Portali in ORIGINALE - ci occupiamo noi di fare le fotocopie!<br>
+                        Opzione 2: Inviaci le foto via WhatsApp alla sede che preferisci<br>
+                        Opzione 3: Porta le fotocopie già pronte<br><br>
+                        Se già in possesso di patentino AM, ricordati di includerlo.
+                    </div>
+                </div>
+
+                <div class="document-item" data-doc="soggiorno">
+                    <div class="document-header">
+                        <div class="document-icon">📄</div>
+                        <div class="document-content">
+                            <div class="document-title-row">
+                                <div class="document-title">Permesso di soggiorno</div>
+                            </div>
+                            <div class="document-description">O ricevute se in attesa</div>
+                        </div>
+                        <div style="color: #6b7280; font-size: 20px; margin-left: auto;">▼</div>
+                    </div>
+                    <div class="document-details" id="details-soggiorno">
+                        Per cittadini extra-UE: permesso di soggiorno valido o ricevute di rinnovo.
+                        Anche questi possono essere portati in originale - pensiamo noi alle fotocopie!
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <span class="info-icon">💡</span>
+                <div class="info-text">
+                    <strong>Suggerimento:</strong> La foto tessera la facciamo <span style="color: #dc2626; font-weight: bold; text-decoration: underline;">GRATIS</span> direttamente in sede! 
+                    Porta i documenti in ORIGINALE e ci occupiamo noi di fare le fotocopie. 
+                    Se preferisci, puoi portare le fotocopie già pronte.
+                </div>
+            </div>
+
+            <!-- Avviso importante sui 3 mesi -->
+            <div style="background: linear-gradient(90deg, #fbbf24, #f59e0b); border: 2px solid #dc2626; padding: 15px 20px; border-radius: 12px; margin-top: 20px; text-align: center;">
+                <p style="color: #7c2d12; font-weight: 700; font-size: 15px; margin: 0;">
+                    ⚠️ <strong>IMPORTANTE: Porta il primo acconto entro 3 mesi dall'iscrizione, altrimenti il certificato medico scade!</strong>
+                </p>
+            </div>
+
+            <!-- Avviso informazioni sotto il suggerimento -->
+            <div style="background: linear-gradient(135deg, #fee2e2, #fecaca); padding: 15px 20px; border-radius: 12px; margin-top: 20px; text-align: center;">
+                <p style="color: #991b1b; font-weight: 600; font-size: 15px; margin: 0;">
+                    📍 <strong>Hai bisogno di maggiori informazioni?</strong><br>
+                    <span style="font-weight: 500;">Scrivici su WhatsApp o inviaci una mail - ti risponderemo subito!</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Orari lezioni -->
+        <div class="info-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-bottom: 60px;">
+            <!-- Orari lezioni BASSANO -->
+            <div class="info-card">
+                <h3 class="info-card-title">
+                    🕐 Orari teoria - Bassano del Grappa
+                </h3>
+                <div class="schedule-box">
+                    <div class="schedule-title">LEZIONI POMERIDIANE</div>
+                    <div class="schedule-location">📍 Sede di Bassano del Grappa</div>
+                    <div class="schedule-item">
+                        <span class="check-icon">✅</span>
+                        <span>Martedì - dalle 15:00 alle 17:00</span>
+                    </div>
+                    <div class="schedule-item">
+                        <span class="check-icon">✅</span>
+                        <span>Mercoledì - dalle 15:00 alle 17:00</span>
+                    </div>
+                    
+                    <div class="schedule-title" style="margin-top: 20px;">LEZIONI SERALI</div>
+                    <div class="schedule-item">
+                        <span class="check-icon">✅</span>
+                        <span>Lunedì - dalle 18:30 alle 20:30</span>
+                    </div>
+                    <div class="schedule-item">
+                        <span class="check-icon">✅</span>
+                        <span>Martedì - dalle 18:30 alle 20:30</span>
+                    </div>
+                    <div class="schedule-item">
+                        <span class="check-icon">✅</span>
+                        <span>Giovedì - dalle 18:30 alle 20:30</span>
+                    </div>
+                    <div class="schedule-item">
+                        <span class="check-icon">✅</span>
+                        <span>Venerdì - dalle 18:30 alle 20:30</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Orari lezioni CARTIGLIANO -->
+            <div class="info-card">
+                <h3 class="info-card-title">
+                    🕐 Orari teoria - Cartigliano
+                </h3>
+                <div class="schedule-box">
+                    <div class="schedule-title">LEZIONI SERALI</div>
+                    <div class="schedule-location">📍 Sede di Cartigliano</div>
+                    <div class="schedule-item">
+                        <span class="check-icon">✅</span>
+                        <span>Lunedì - dalle 18:30</span>
+                    </div>
+                    <div class="schedule-item">
+                        <span class="check-icon">✅</span>
+                        <span>Martedì - dalle 18:30</span>
+                    </div>
+                    <div class="schedule-item">
+                        <span class="check-icon">✅</span>
+                        <span>Giovedì - dalle 18:30</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Contatti dedicata e prominente -->
+        <div style="background: linear-gradient(135deg, #ffffff, #f9fafb); padding: 60px 20px; margin: 0 -20px 40px -20px; box-shadow: 0 -5px 20px rgba(0,0,0,0.05), 0 5px 20px rgba(0,0,0,0.05);">
+            <h2 style="text-align: center; font-size: 32px; color: #1f2937; margin-bottom: 15px; font-weight: bold;">
+                💬 Scrivici su WhatsApp
+            </h2>
+            <p style="text-align: center; color: #6b7280; font-size: 18px; margin-bottom: 40px;">
+                Il modo più veloce per avere tutte le informazioni di cui hai bisogno
+            </p>
+            
+            <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; max-width: 800px; margin: 0 auto;">
+                <!-- WhatsApp Bassano Grande -->
+                <a href="https://wa.me/390424523690" style="display: flex; flex-direction: column; align-items: center; padding: 30px; background: linear-gradient(135deg, #d1fae5, #a7f3d0); border-radius: 20px; text-decoration: none; transition: all 0.3s; flex: 1; min-width: 280px; box-shadow: 0 5px 15px rgba(16, 185, 129, 0.2);">
+                    <div style="width: 80px; height: 80px; background: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 40px; margin-bottom: 20px;">
+                        📱
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-weight: bold; color: #064e3b; font-size: 20px; margin-bottom: 5px;">Sede Bassano</div>
+                        <div style="color: #047857; font-size: 18px; margin-bottom: 5px;">0424 523690</div>
+                        <div style="color: #6b7280; font-size: 14px; font-style: italic;">📍 Bassano del Grappa</div>
+                    </div>
+                </a>
+
+                <!-- WhatsApp Cartigliano Grande -->
+                <a href="https://wa.me/393474964047" style="display: flex; flex-direction: column; align-items: center; padding: 30px; background: linear-gradient(135deg, #d1fae5, #a7f3d0); border-radius: 20px; text-decoration: none; transition: all 0.3s; flex: 1; min-width: 280px; box-shadow: 0 5px 15px rgba(16, 185, 129, 0.2);">
+                    <div style="width: 80px; height: 80px; background: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 40px; margin-bottom: 20px;">
+                        📱
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-weight: bold; color: #064e3b; font-size: 20px; margin-bottom: 5px;">Sede Cartigliano</div>
+                        <div style="color: #047857; font-size: 18px; margin-bottom: 5px;">347 496 4047</div>
+                        <div style="color: #6b7280; font-size: 14px; font-style: italic;">📍 Cartigliano - Andrea</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Email sotto -->
+            <div style="text-align: center; margin-top: 40px;">
+                <p style="color: #6b7280; margin-bottom: 15px;">Preferisci scrivere una mail?</p>
+                <a href="mailto:autoscuole.aba@virgilio.it" style="display: inline-flex; align-items: center; gap: 10px; padding: 15px 30px; background: #dbeafe; border-radius: 12px; text-decoration: none; color: #1e40af; font-weight: 600; transition: all 0.3s;">
+                    <span style="font-size: 20px;">✉️</span>
+                    autoscuole.aba@virgilio.it
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer semplice -->
+    <footer style="background: linear-gradient(135deg, #ef4444, #dc2626); color: white; padding: 30px 20px; text-align: center;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <p style="font-size: 16px; margin-bottom: 10px; font-weight: 600;">
+                © 2025 Autoscuola ABA - Bassano del Grappa e Cartigliano
+            </p>
+            <p style="font-size: 14px; opacity: 0.9;">
+                La tua patente ti aspetta - Contattaci su WhatsApp per iniziare subito!
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Variabile globale per la categoria selezionata
+        let selectedCategory = 'B'; // Default patente B
+        
+        // Funzione per aggiornare i link WhatsApp con la categoria selezionata
+        function updateWhatsAppLinks() {
+            const message = `Salve, vorrei informazioni per l'iscrizione alla patente ${selectedCategory}`;
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Aggiorna tutti i link WhatsApp Bassano
+            const bassanoLinks = document.querySelectorAll('a[href*="wa.me/390424523690"]');
+            bassanoLinks.forEach(link => {
+                link.href = `https://wa.me/390424523690?text=${encodedMessage}`;
+            });
+            
+            // Aggiorna tutti i link WhatsApp Cartigliano
+            const cartiglianoLinks = document.querySelectorAll('a[href*="wa.me/393474964047"]');
+            cartiglianoLinks.forEach(link => {
+                link.href = `https://wa.me/393474964047?text=${encodedMessage}`;
+            });
+        }
+        
+        // Funzione per toggle documenti
+        function toggleDocument(docType) {
+            const details = document.getElementById(`details-${docType}`);
+            const arrow = document.querySelector(`[data-doc="${docType}"] .document-header > div:last-child`);
+            
+            if (details) {
+                const isOpen = details.classList.contains('show');
+                
+                // Chiudi tutti
+                document.querySelectorAll('.document-details').forEach(d => {
+                    d.classList.remove('show');
+                });
+                // Resetta tutte le frecce
+                document.querySelectorAll('.document-item .document-header > div:last-child').forEach(a => {
+                    if (a) a.style.transform = 'rotate(0deg)';
+                });
+                
+                // Se era chiuso, aprilo
+                if (!isOpen) {
+                    details.classList.add('show');
+                    if (arrow) arrow.style.transform = 'rotate(180deg)';
+                }
+            }
+        }
+        
+        // Inizializzazione quando il DOM è pronto
+        window.onload = function() {
+            
+            // CATEGORIE PATENTE - Gestione semplificata
+            const categoryCards = document.querySelectorAll('.category-card');
+            categoryCards.forEach(function(card) {
+                card.style.cursor = 'pointer';
+                card.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    // Rimuovi selezione precedente
+                    categoryCards.forEach(c => c.classList.remove('selected'));
+                    // Aggiungi selezione corrente
+                    this.classList.add('selected');
+                    
+                    // Aggiorna la categoria selezionata
+                    selectedCategory = this.getAttribute('data-category');
+                    
+                    // Aggiorna i link WhatsApp
+                    updateWhatsAppLinks();
+                });
+            });
+
+            // DOCUMENTI - Gestione semplificata con delega eventi
+            document.addEventListener('click', function(e) {
+                // Verifica se il click è su un documento o un suo figlio
+                let docItem = e.target.closest('.document-item');
+                if (docItem) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const docType = docItem.getAttribute('data-doc');
+                    toggleDocument(docType);
+                }
+            });
+            
+            // Aggiungi transizione alle frecce
+            document.querySelectorAll('.document-item .document-header > div:last-child').forEach(arrow => {
+                arrow.style.transition = 'transform 0.3s ease';
+            });
+            
+            // Inizializza i link WhatsApp con la categoria default
+            updateWhatsAppLinks();
+        };
+    </script>
+</body>
+</html>
