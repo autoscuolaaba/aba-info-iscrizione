@@ -241,6 +241,29 @@
             min-height: 50px;
         }
 
+        .document-check {
+            display: flex;
+            align-items: center;
+            padding-top: 2px;
+        }
+
+        .document-item.completed {
+            background: linear-gradient(135deg, #d1fae5, #f0fdf4);
+            border-color: #10b981;
+        }
+
+        .document-item.completed .document-title {
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        .doc-checkbox {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            accent-color: #10b981;
+        }
+
         .document-icon {
             font-size: 28px;
             line-height: 1;
@@ -742,9 +765,24 @@
         <div class="documents-card">
             <h2 class="section-title">📋 Documenti necessari per l'iscrizione</h2>
             
+            <!-- Barra di progresso -->
+            <div style="background: #f3f4f6; border-radius: 10px; padding: 15px; margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <span style="font-weight: 600; color: #374151;">I tuoi progressi:</span>
+                    <span id="progress-text" style="color: #059669; font-weight: 600;">0 di 5 documenti obbligatori</span>
+                </div>
+                <div style="background: #e5e7eb; height: 8px; border-radius: 4px; overflow: hidden;">
+                    <div id="progress-bar" style="background: linear-gradient(90deg, #10b981, #059669); height: 100%; width: 0%; transition: width 0.3s ease;"></div>
+                </div>
+            </div>
+            
             <div class="documents-grid">
                 <div class="document-item required" data-doc="documenti">
                     <div class="document-header">
+                        <div class="document-check">
+                            <input type="checkbox" id="check-documenti" class="doc-checkbox" data-required="true" 
+                                   style="width: 24px; height: 24px; cursor: pointer; accent-color: #10b981;">
+                        </div>
                         <div class="document-icon">🪪</div>
                         <div class="document-content">
                             <div class="document-title-row">
@@ -766,6 +804,10 @@
 
                 <div class="document-item required" data-doc="foto">
                     <div class="document-header">
+                        <div class="document-check">
+                            <input type="checkbox" id="check-foto" class="doc-checkbox" data-required="true"
+                                   style="width: 24px; height: 24px; cursor: pointer; accent-color: #10b981;">
+                        </div>
                         <div class="document-icon">📸</div>
                         <div class="document-content">
                             <div class="document-title-row">
@@ -784,6 +826,10 @@
 
                 <div class="document-item required" data-doc="tasse">
                     <div class="document-header">
+                        <div class="document-check">
+                            <input type="checkbox" id="check-tasse" class="doc-checkbox" data-required="true"
+                                   style="width: 24px; height: 24px; cursor: pointer; accent-color: #10b981;">
+                        </div>
                         <div class="document-icon">💶</div>
                         <div class="document-content">
                             <div class="document-title-row">
@@ -801,6 +847,10 @@
 
                 <div class="document-item required" data-doc="anamnestico">
                     <div class="document-header">
+                        <div class="document-check">
+                            <input type="checkbox" id="check-anamnestico" class="doc-checkbox" data-required="true"
+                                   style="width: 24px; height: 24px; cursor: pointer; accent-color: #10b981;">
+                        </div>
                         <div class="document-icon">📋</div>
                         <div class="document-content">
                             <div class="document-title-row">
@@ -819,6 +869,10 @@
 
                 <div class="document-item required" data-doc="certificato-medico">
                     <div class="document-header">
+                        <div class="document-check">
+                            <input type="checkbox" id="check-certificato-medico" class="doc-checkbox" data-required="true"
+                                   style="width: 24px; height: 24px; cursor: pointer; accent-color: #10b981;">
+                        </div>
                         <div class="document-icon">🏥</div>
                         <div class="document-content">
                             <div class="document-title-row">
@@ -840,6 +894,10 @@
 
                 <div class="document-item" data-doc="soggiorno">
                     <div class="document-header">
+                        <div class="document-check">
+                            <input type="checkbox" id="check-soggiorno" class="doc-checkbox" data-required="false"
+                                   style="width: 24px; height: 24px; cursor: pointer; accent-color: #10b981;">
+                        </div>
                         <div class="document-icon">📄</div>
                         <div class="document-content">
                             <div class="document-title-row">
@@ -1049,6 +1107,71 @@
             }
         }
         
+        // Funzione per aggiornare la barra di progresso
+        function updateProgressBar() {
+            const requiredCheckboxes = document.querySelectorAll('.doc-checkbox[data-required="true"]');
+            const checkedRequired = document.querySelectorAll('.doc-checkbox[data-required="true"]:checked');
+            const totalRequired = requiredCheckboxes.length;
+            const completedRequired = checkedRequired.length;
+            
+            // Aggiorna testo
+            const progressText = document.getElementById('progress-text');
+            if (progressText) {
+                progressText.textContent = `${completedRequired} di ${totalRequired} documenti obbligatori`;
+                
+                if (completedRequired === totalRequired) {
+                    progressText.style.color = '#059669';
+                    progressText.innerHTML = '✅ Tutti i documenti obbligatori sono pronti!';
+                }
+            }
+            
+            // Aggiorna barra
+            const progressBar = document.getElementById('progress-bar');
+            if (progressBar) {
+                const percentage = (completedRequired / totalRequired) * 100;
+                progressBar.style.width = `${percentage}%`;
+                
+                if (percentage === 100) {
+                    progressBar.style.background = 'linear-gradient(90deg, #10b981, #059669)';
+                } else if (percentage >= 60) {
+                    progressBar.style.background = 'linear-gradient(90deg, #fbbf24, #f59e0b)';
+                } else {
+                    progressBar.style.background = 'linear-gradient(90deg, #93c5fd, #60a5fa)';
+                }
+            }
+        }
+        
+        // Funzione per salvare lo stato in localStorage
+        function saveCheckboxState(checkboxId, isChecked) {
+            const savedStates = JSON.parse(localStorage.getItem('documentChecklist') || '{}');
+            savedStates[checkboxId] = isChecked;
+            localStorage.setItem('documentChecklist', JSON.stringify(savedStates));
+        }
+        
+        // Funzione per ripristinare lo stato dal localStorage
+        function restoreCheckboxStates() {
+            const savedStates = JSON.parse(localStorage.getItem('documentChecklist') || '{}');
+            
+            Object.keys(savedStates).forEach(checkboxId => {
+                const checkbox = document.getElementById(checkboxId);
+                if (checkbox) {
+                    checkbox.checked = savedStates[checkboxId];
+                    
+                    // Aggiorna lo stile del documento
+                    const docItem = checkbox.closest('.document-item');
+                    if (docItem) {
+                        if (savedStates[checkboxId]) {
+                            docItem.classList.add('completed');
+                        } else {
+                            docItem.classList.remove('completed');
+                        }
+                    }
+                }
+            });
+            
+            updateProgressBar();
+        }
+        
         // Inizializzazione quando il DOM è pronto
         window.onload = function() {
             
@@ -1074,9 +1197,11 @@
 
             // DOCUMENTI - Gestione semplificata con delega eventi
             document.addEventListener('click', function(e) {
-                // Verifica se il click è su un documento o un suo figlio
+                // Verifica se il click è su un documento o un suo figlio (ma non sulla checkbox)
                 let docItem = e.target.closest('.document-item');
-                if (docItem) {
+                let checkbox = e.target.closest('.doc-checkbox');
+                
+                if (docItem && !checkbox) {
                     e.preventDefault();
                     e.stopPropagation();
                     const docType = docItem.getAttribute('data-doc');
@@ -1084,10 +1209,43 @@
                 }
             });
             
+            // GESTIONE CHECKBOX
+            const checkboxes = document.querySelectorAll('.doc-checkbox');
+            checkboxes.forEach(function(checkbox) {
+                checkbox.addEventListener('change', function(e) {
+                    e.stopPropagation();
+                    
+                    // Trova il documento parent
+                    const docItem = this.closest('.document-item');
+                    
+                    // Aggiorna lo stile
+                    if (this.checked) {
+                        docItem.classList.add('completed');
+                        
+                        // Mostra un feedback visivo temporaneo
+                        docItem.style.transform = 'scale(1.02)';
+                        setTimeout(() => {
+                            docItem.style.transform = 'scale(1)';
+                        }, 200);
+                    } else {
+                        docItem.classList.remove('completed');
+                    }
+                    
+                    // Salva lo stato
+                    saveCheckboxState(this.id, this.checked);
+                    
+                    // Aggiorna la barra di progresso
+                    updateProgressBar();
+                });
+            });
+            
             // Aggiungi transizione alle frecce
             document.querySelectorAll('.document-item .document-header > div:last-child').forEach(arrow => {
                 arrow.style.transition = 'transform 0.3s ease';
             });
+            
+            // Ripristina gli stati salvati
+            restoreCheckboxStates();
             
             // Inizializza i link WhatsApp con la categoria default
             updateWhatsAppLinks();
