@@ -264,6 +264,148 @@
             accent-color: #10b981;
         }
 
+        /* Animazioni per i box cliccabili - MIGLIORATE */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 12px 35px rgba(16, 185, 129, 0.6);
+                transform: scale(1.03);
+            }
+            100% {
+                box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+                transform: scale(1);
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% {
+                transform: translateX(0) scale(1);
+            }
+            10%, 30%, 50%, 70%, 90% {
+                transform: translateX(-3px) scale(1.01);
+            }
+            20%, 40%, 60%, 80% {
+                transform: translateX(3px) scale(1.01);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(16, 185, 129, 0.5), 0 0 40px rgba(16, 185, 129, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(16, 185, 129, 0.7), 0 0 60px rgba(16, 185, 129, 0.5);
+            }
+        }
+
+        @keyframes glowYellow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(251, 191, 36, 0.5), 0 0 40px rgba(251, 191, 36, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(251, 191, 36, 0.7), 0 0 60px rgba(251, 191, 36, 0.5);
+            }
+        }
+
+        /* Box Download - Effetti migliorati */
+        .clickable-download-link {
+            text-decoration: none;
+            display: block;
+        }
+
+        .download-box {
+            background: linear-gradient(135deg, #10b981, #059669);
+            border: 4px solid #047857;
+            padding: 25px;
+            border-radius: 16px;
+            margin-top: 15px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+            animation: pulse 3s infinite, glow 2s infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                left: -50%;
+            }
+            50%, 100% {
+                left: 150%;
+            }
+        }
+
+        .download-box:hover {
+            transform: scale(1.08) translateY(-3px) !important;
+            box-shadow: 0 15px 40px rgba(16, 185, 129, 0.6) !important;
+            background: linear-gradient(135deg, #059669, #047857) !important;
+            border-color: #065f46 !important;
+        }
+
+        .download-box:active {
+            transform: scale(1.05) translateY(0px) !important;
+        }
+
+        /* Box Prenotazione - Effetti migliorati */
+        .clickable-booking-link {
+            text-decoration: none;
+            display: block;
+        }
+
+        .booking-box {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border: 4px solid #d97706;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 25px rgba(251, 191, 36, 0.4);
+            animation: shake 4s infinite, glowYellow 2s infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .booking-box::before {
+            content: '⚡';
+            position: absolute;
+            font-size: 60px;
+            opacity: 0.1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-15deg);
+            animation: pulse 2s infinite;
+        }
+
+        .booking-box:hover {
+            transform: scale(1.08) translateY(-3px) !important;
+            box-shadow: 0 15px 40px rgba(251, 191, 36, 0.6) !important;
+            background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+            border-color: #b45309 !important;
+        }
+
+        .booking-box:active {
+            transform: scale(1.05) translateY(0px) !important;
+        }
+
         .document-icon {
             font-size: 28px;
             line-height: 1;
@@ -880,11 +1022,14 @@
                     <div class="document-details" id="details-anamnestico">
                         Documento rilasciato dal medico di famiglia che attesta l'anamnesi del paziente.<br><br>
                         <strong style="color: #dc2626;">⚠️ IMPORTANTE: Questo certificato va fatto PRIMA di prenotare la visita medica!</strong><br><br>
-                        <div style="background: #f0fdf4; border: 2px solid #10b981; padding: 15px; border-radius: 10px; margin-top: 10px;">
-                            <strong style="color: #059669;">📄 Scarica il modulo:</strong> Puoi scaricare il modulo da stampare e portare al tuo medico di base cliccando 
-                            <a href="https://drive.google.com/file/d/1TDzVT96agdUIARBQVvfZTT2zyXfomn_v/view" target="_blank" 
-                               style="color: #0066cc; text-decoration: underline; font-weight: bold;">QUI</a>
-                        </div>
+                        <a href="https://drive.google.com/file/d/1TDzVT96agdUIARBQVvfZTT2zyXfomn_v/view" target="_blank" class="clickable-download-link">
+                            <div class="download-box">
+                                <strong style="color: white; font-size: 20px; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); position: relative; z-index: 1;">
+                                    📄 SCARICA IL CERTIFICATO DA QUI<br>
+                                    <span style="font-size: 16px; opacity: 0.95;">👆 e portalo al tuo medico da compilare</span>
+                                </strong>
+                            </div>
+                        </a>
                     </div>
                 </div>
 
@@ -905,10 +1050,11 @@
                         <div style="color: #6b7280; font-size: 20px; margin-left: auto;">▼</div>
                     </div>
                     <div class="document-details" id="details-certificato-medico">
-                        <a href="https://www.autoscuoleaba.it/prenotazione-visite-allievi" target="_blank" 
-                           style="text-decoration: none;">
-                            <div style="background: linear-gradient(135deg, #86efac, #4ade80); padding: 20px; border-radius: 12px; margin-bottom: 15px; cursor: pointer; text-align: center; transition: all 0.3s;">
-                                <strong style="color: #14532d; font-size: 18px;">📅 PRENOTALO COMODAMENTE CLICCANDO QUI</strong>
+                        <a href="https://www.autoscuoleaba.it/prenotazione-visite-allievi" target="_blank" class="clickable-booking-link">
+                            <div class="booking-box">
+                                <strong style="color: #451a03; font-size: 22px; text-shadow: 1px 1px 3px rgba(255,255,255,0.4); position: relative; z-index: 1;">
+                                    📅 PRENOTA LA VISITA MEDICA ORA
+                                </strong>
                             </div>
                         </a>
                         
@@ -1226,13 +1372,22 @@
                 });
             });
 
-            // DOCUMENTI - Gestione semplificata con delega eventi
+            // DOCUMENTI - Gestione migliorata: i link nei box non chiudono più i dettagli
             document.addEventListener('click', function(e) {
-                // Verifica se il click è su un documento o un suo figlio (ma non sulla checkbox)
-                let docItem = e.target.closest('.document-item');
-                let checkbox = e.target.closest('.doc-checkbox');
+                // Se il click è su un link cliccabile (download o booking), NON chiudere
+                if (e.target.closest('.clickable-download-link') || e.target.closest('.clickable-booking-link')) {
+                    return; // Lascia che il link funzioni normalmente
+                }
                 
-                if (docItem && !checkbox) {
+                // Se il click è su una checkbox, non fare nulla
+                let checkbox = e.target.closest('.doc-checkbox');
+                if (checkbox) {
+                    return;
+                }
+                
+                // Verifica se il click è su un documento o un suo figlio
+                let docItem = e.target.closest('.document-item');
+                if (docItem && !e.target.closest('.document-details')) {
                     e.preventDefault();
                     e.stopPropagation();
                     const docType = docItem.getAttribute('data-doc');
