@@ -489,188 +489,80 @@
         }
 
         /* ============================================
-           NOVITÀ BOX - Prenotazione Esame Teoria
+           ESCLUSIVA BOX - Prenotazione Esame Teoria
            ============================================ */
         
-        /* Badge NOVITÀ animato */
-        @keyframes novitaPulse {
-            0%, 100% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
-            }
-            50% {
-                transform: scale(1.05);
-                box-shadow: 0 0 0 10px rgba(220, 38, 38, 0);
-            }
-        }
-
-        @keyframes novitaShine {
-            0% {
-                background-position: -200% center;
-            }
-            100% {
-                background-position: 200% center;
-            }
-        }
-
-        @keyframes novitaBounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0) rotate(-3deg);
-            }
-            40% {
-                transform: translateY(-8px) rotate(-3deg);
-            }
-            60% {
-                transform: translateY(-4px) rotate(-3deg);
-            }
-        }
-
-        @keyframes starSparkle {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.2); }
-        }
-
-        @keyframes borderGlow {
-            0%, 100% {
-                border-color: #dc2626;
-                box-shadow: 0 0 15px rgba(220, 38, 38, 0.3), 0 8px 30px rgba(139, 92, 246, 0.2);
-            }
-            50% {
-                border-color: #8b5cf6;
-                box-shadow: 0 0 25px rgba(139, 92, 246, 0.4), 0 8px 30px rgba(220, 38, 38, 0.2);
-            }
-        }
-
-        .novita-box {
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fef3c7 100%);
-            border: 3px solid #dc2626;
-            border-radius: 16px;
-            padding: 25px 30px;
+        .esclusiva-box {
+            background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+            border: 2px solid #8b5cf6;
+            border-radius: 12px;
+            padding: 20px;
             margin-top: 20px;
-            position: relative;
-            overflow: hidden;
-            animation: borderGlow 3s ease-in-out infinite;
             text-align: center;
         }
 
-        .novita-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            animation: shine 4s infinite;
-        }
-
-        .novita-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .novita-badge-container {
-            flex-shrink: 0;
-            position: relative;
-        }
-
-        .novita-badge {
-            background: linear-gradient(135deg, #dc2626 0%, #ef4444 50%, #dc2626 100%);
-            background-size: 200% auto;
-            color: white;
-            font-weight: 900;
-            font-size: 14px;
-            padding: 12px 22px;
-            border-radius: 12px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            animation: novitaPulse 2s infinite, novitaShine 3s linear infinite, novitaBounce 2s ease-in-out infinite;
-            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
-            position: relative;
+        .esclusiva-header {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-        }
-
-        .novita-badge::before {
-            content: '✨';
-            font-size: 16px;
-            animation: starSparkle 1s infinite;
-        }
-
-        .novita-badge::after {
-            content: '🎉';
-            font-size: 16px;
-            animation: starSparkle 1s infinite 0.5s;
-        }
-
-        .novita-text-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .novita-title {
-            font-weight: 700;
-            font-size: 18px;
-            color: #1f2937;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             gap: 8px;
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+            font-weight: 700;
+            font-size: 12px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
         }
 
-        .novita-description {
+        .esclusiva-title {
+            font-weight: 700;
+            font-size: 17px;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .esclusiva-description {
             color: #4b5563;
             font-size: 14px;
-            line-height: 1.6;
+            line-height: 1.5;
             margin-bottom: 15px;
-            max-width: 600px;
+            max-width: 550px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .novita-link {
+        .esclusiva-link {
             display: inline-flex;
             align-items: center;
             gap: 10px;
             background: linear-gradient(135deg, #8b5cf6, #7c3aed);
             color: white;
             text-decoration: none;
-            padding: 14px 28px;
-            border-radius: 12px;
+            padding: 12px 24px;
+            border-radius: 10px;
             font-weight: 700;
-            font-size: 16px;
+            font-size: 15px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
         }
 
-        .novita-link:hover {
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.5);
+        .esclusiva-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
             background: linear-gradient(135deg, #7c3aed, #6d28d9);
         }
 
-        .novita-link:active {
-            transform: translateY(0) scale(0.98);
+        .esclusiva-link:active {
+            transform: translateY(0);
         }
 
-        .novita-exclusive {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            background: linear-gradient(135deg, #fee2e2, #fecaca);
-            color: #991b1b;
+        .esclusiva-note {
+            color: #6d28d9;
             font-size: 12px;
-            font-weight: 600;
-            padding: 8px 14px;
-            border-radius: 20px;
+            font-weight: 500;
             margin-top: 12px;
-            border: 1px solid #fca5a5;
         }
 
         /* Schedule and Contacts Grid */
@@ -964,31 +856,30 @@
                 font-size: 14px !important;
             }
 
-            /* NOVITÀ box responsive */
-            .novita-box {
-                padding: 20px 15px;
+            /* ESCLUSIVA box responsive */
+            .esclusiva-box {
+                padding: 15px;
             }
 
-            .novita-badge {
-                font-size: 12px;
-                padding: 10px 16px;
+            .esclusiva-header {
+                font-size: 11px;
+                padding: 5px 12px;
             }
 
-            .novita-title {
-                font-size: 16px;
+            .esclusiva-title {
+                font-size: 15px;
             }
 
-            .novita-description {
+            .esclusiva-description {
                 font-size: 13px;
             }
 
-            .novita-link {
-                width: auto;
-                padding: 12px 20px;
+            .esclusiva-link {
+                padding: 10px 18px;
                 font-size: 14px;
             }
 
-            .novita-exclusive {
+            .esclusiva-note {
                 font-size: 11px;
             }
         }
@@ -1313,31 +1204,26 @@
             </div>
 
             <!-- =============================================
-                 NOVITÀ - Prenotazione Esame Teoria Online
+                 ESCLUSIVA - Prenotazione Esame Teoria Online
                  ============================================= -->
-            <div class="novita-box">
-                <div class="novita-content">
-                    <div class="novita-badge-container">
-                        <div class="novita-badge">NOVITÀ</div>
-                    </div>
-                    <div class="novita-text-content">
-                        <div class="novita-title">
-                            📅 Prenota il tuo esame di teoria ONLINE!
-                        </div>
-                        <div class="novita-description">
-                            Ora puoi prenotare comodamente l'esame di teoria direttamente dal tuo smartphone o computer, 
-                            senza dover chiamare o passare in sede. Scegli la data che preferisci tra quelle disponibili!
-                        </div>
-                        <a href="https://autoscuolaaba.github.io/prenota-esame-teoria/" target="_blank" class="novita-link">
-                            <span>📱</span>
-                            PRENOTA ORA IL TUO ESAME
-                            <span>→</span>
-                        </a>
-                        <div class="novita-exclusive">
-                            <span>🔒</span>
-                            Servizio esclusivo per gli allievi già iscritti all'autoscuola
-                        </div>
-                    </div>
+            <div class="esclusiva-box">
+                <div class="esclusiva-header">
+                    ESCLUSIVA ISCRITTI
+                </div>
+                <div class="esclusiva-title">
+                    📅 Prenota il tuo esame di teoria ONLINE!
+                </div>
+                <div class="esclusiva-description">
+                    Ora puoi prenotare comodamente l'esame di teoria direttamente dal tuo smartphone o computer, 
+                    senza dover chiamare o passare in sede. Scegli la data che preferisci tra quelle disponibili!
+                </div>
+                <a href="https://autoscuolaaba.github.io/prenota-esame-teoria/" target="_blank" class="esclusiva-link">
+                    <span>📱</span>
+                    PRENOTA ORA IL TUO ESAME
+                    <span>→</span>
+                </a>
+                <div class="esclusiva-note">
+                    🔒 Servizio riservato agli allievi già iscritti all'autoscuola
                 </div>
             </div>
 
@@ -1617,7 +1503,7 @@
             // DOCUMENTI - Gestione migliorata: i link nei box non chiudono più i dettagli
             document.addEventListener('click', function(e) {
                 // Se il click è su un link cliccabile (download o booking), NON chiudere
-                if (e.target.closest('.clickable-download-link') || e.target.closest('.clickable-booking-link') || e.target.closest('.novita-link')) {
+                if (e.target.closest('.clickable-download-link') || e.target.closest('.clickable-booking-link') || e.target.closest('.esclusiva-link')) {
                     return; // Lascia che il link funzioni normalmente
                 }
                 
