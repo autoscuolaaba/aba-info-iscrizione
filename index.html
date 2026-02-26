@@ -212,7 +212,6 @@
             border: 2px solid #e5e7eb;
             border-radius: 12px;
             padding: 20px;
-            cursor: pointer;
             transition: all 0.3s;
             position: relative;
             min-height: 80px;
@@ -449,8 +448,7 @@
             border-radius: 8px;
             font-size: 14px;
             color: #4b5563;
-            display: none;
-            animation: slideDown 0.3s ease;
+            display: block;
         }
 
         @keyframes slideDown {
@@ -1052,7 +1050,6 @@
                             </div>
                             <div class="document-description">Carta identità + Codice fiscale + Patentino (se presente)</div>
                         </div>
-                        <div style="color: #6b7280; font-size: 20px; margin-left: auto;">▼</div>
                     </div>
                     <div class="document-details" id="details-documenti">
                         <strong style="color: #10b981;">💬 NUOVO: Puoi inviarci le foto dei documenti direttamente su WhatsApp!</strong><br><br>
@@ -1077,7 +1074,6 @@
                             </div>
                             <div class="document-description" style="color: #10b981; font-weight: 600;">✅ Possiamo farla GRATIS in sede!</div>
                         </div>
-                        <div style="color: #6b7280; font-size: 20px; margin-left: auto;">▼</div>
                     </div>
                     <div class="document-details" id="details-foto">
                         <strong style="color: #10b981; font-size: 16px;">📸 Scattiamo la foto GRATIS direttamente presso la nostra sede!</strong><br><br>
@@ -1099,7 +1095,6 @@
                             </div>
                             <div class="document-description">Tasse motorizzazione</div>
                         </div>
-                        <div style="color: #6b7280; font-size: 20px; margin-left: auto;">▼</div>
                     </div>
                     <div class="document-details" id="details-tasse">
                         Importo fisso per le tasse della motorizzazione. Da pagare esclusivamente in contanti.<br><br>
@@ -1121,7 +1116,6 @@
                             </div>
                             <div class="document-description" style="color: #dc2626; font-weight: 600;">⚠️ DAL MEDICO DI BASE - DA FARE PRIMA</div>
                         </div>
-                        <div style="color: #6b7280; font-size: 20px; margin-left: auto;">▼</div>
                     </div>
                     <div class="document-details" id="details-anamnestico">
                         Documento rilasciato dal medico di famiglia che attesta l'anamnesi del paziente.<br><br>
@@ -1151,7 +1145,6 @@
                             </div>
                             <div class="document-description" style="color: #dc2626; font-weight: 600;">⚠️ SOLO SU PRENOTAZIONE</div>
                         </div>
-                        <div style="color: #6b7280; font-size: 20px; margin-left: auto;">▼</div>
                     </div>
                     <div class="document-details" id="details-certificato-medico">
                         <a href="https://www.autoscuoleaba.it/prenotazione-visite-allievi" target="_blank" class="clickable-booking-link">
@@ -1185,7 +1178,6 @@
                             </div>
                             <div class="document-description">O ricevute se in attesa</div>
                         </div>
-                        <div style="color: #6b7280; font-size: 20px; margin-left: auto;">▼</div>
                     </div>
                     <div class="document-details" id="details-soggiorno">
                         Per cittadini extra-UE: permesso di soggiorno valido o ricevute di rinnovo.
@@ -1495,28 +1487,6 @@
                 });
             });
 
-            // DOCUMENTI - Gestione migliorata: i link nei box non chiudono più i dettagli
-            document.addEventListener('click', function(e) {
-                // Se il click è su un link cliccabile (download o booking), NON chiudere
-                if (e.target.closest('.clickable-download-link') || e.target.closest('.clickable-booking-link') || e.target.closest('.esclusiva-link')) {
-                    return; // Lascia che il link funzioni normalmente
-                }
-                
-                // Se il click è su una checkbox, non fare nulla
-                let checkbox = e.target.closest('.doc-checkbox');
-                if (checkbox) {
-                    return;
-                }
-                
-                // Verifica se il click è su un documento o un suo figlio
-                let docItem = e.target.closest('.document-item');
-                if (docItem && !e.target.closest('.document-details')) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const docType = docItem.getAttribute('data-doc');
-                    toggleDocument(docType);
-                }
-            });
             
             // GESTIONE CHECKBOX
             const checkboxes = document.querySelectorAll('.doc-checkbox');
