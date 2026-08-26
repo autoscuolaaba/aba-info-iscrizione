@@ -5,8 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5, user-scalable=yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Dichiara che la pagina esiste SOLO in chiaro. Senza questa riga, Chrome
+         per Android applica il suo "tema scuro automatico" e inverte i colori da
+         solo: inverte il TESTO ma non i gradienti di sfondo, quindi il riquadro
+         ambra "IMPORTANTE" si ritrovava testo chiaro su fondo chiaro e diventava
+         illeggibile (segnalato il 26/08/2026).
+         ⚠️ Serve la parola "only": `content="light"` da solo dice quali temi la
+         pagina supporta, NON impedisce al browser di inventarsi il tema scuro.
+         L'opt-out documentato da Chrome e' esattamente "only light".
+         Sta nel <meta> e non solo nel CSS perche' il browser lo legge prima di
+         applicare l'inversione. -->
+    <meta name="color-scheme" content="only light">
+    <!-- Barra del browser in tinta con l'intestazione bianca della pagina. -->
+    <meta name="theme-color" content="#ffffff">
     <title>Iscrizione alla tua patente</title>
     <style>
+        /* Gemello CSS del <meta name="color-scheme">: il meta basta per Chrome,
+           questa riga copre i browser che leggono solo il CSS e vale anche se
+           un domani la pagina finisse dentro un iframe. Le due devono restare
+           d'accordo: se un giorno si scrive un tema scuro vero, vanno cambiate
+           TUTTE E DUE in "light dark", altrimenti l'inversione automatica
+           torna a sovrapporsi al tema fatto a mano. */
+        :root {
+            color-scheme: only light;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -16,7 +39,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: #dce3ee;
             min-height: 100vh;
         }
 
@@ -86,7 +109,11 @@
 
         /* Alert Box IMPORTANTE - Ridimensionato */
         .alert-box {
-            background: linear-gradient(90deg, #fbbf24, #f59e0b);
+            /* Tinta piena e non gradiente: stessa ragione dell'avviso sui 3 mesi
+               piu' in basso nella pagina — sotto un tema scuro forzato il
+               gradiente non si inverte ma il testo si', e .alert-text (#7c2d12)
+               spariva sul fondo ambra. */
+            background-color: #fbbf24;
             border: 2px solid #dc2626;
             padding: 15px 20px;
         }
@@ -247,7 +274,7 @@
         }
 
         .document-item.completed {
-            background: linear-gradient(135deg, #d1fae5, #f0fdf4);
+            background: #e0fbec;
             border-color: #10b981;
         }
 
@@ -316,7 +343,7 @@
         }
 
         .download-box {
-            background: linear-gradient(135deg, #10b981, #059669);
+            background: #059669;
             border: 4px solid #047857;
             padding: 25px;
             border-radius: 16px;
@@ -354,7 +381,7 @@
         .download-box:hover {
             transform: scale(1.08) translateY(-3px) !important;
             box-shadow: 0 15px 40px rgba(16, 185, 129, 0.6) !important;
-            background: linear-gradient(135deg, #059669, #047857) !important;
+            background: #047857 !important;
             border-color: #065f46 !important;
         }
 
@@ -369,7 +396,7 @@
         }
 
         .booking-box {
-            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            background: #f8ae17;
             border: 4px solid #d97706;
             padding: 30px;
             border-radius: 16px;
@@ -397,7 +424,7 @@
         .booking-box:hover {
             transform: scale(1.08) translateY(-3px) !important;
             box-shadow: 0 15px 40px rgba(251, 191, 36, 0.6) !important;
-            background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+            background: #e78a08 !important;
             border-color: #b45309 !important;
         }
 
@@ -467,7 +494,7 @@
         }
 
         .info-box {
-            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            background: #cde2fe;
             padding: 20px;
             border-radius: 12px;
             display: flex;
@@ -491,7 +518,7 @@
            ============================================ */
         
         .esclusiva-box {
-            background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+            background: #e5dffe;
             border: 2px solid #8b5cf6;
             border-radius: 12px;
             padding: 20px;
@@ -503,7 +530,7 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            background: #7c3aed;
             color: white;
             font-weight: 700;
             font-size: 12px;
@@ -535,7 +562,7 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            background: #7c3aed;
             color: white;
             text-decoration: none;
             padding: 12px 24px;
@@ -549,7 +576,7 @@
         .esclusiva-link:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
-            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            background: #7431e3;
         }
 
         .esclusiva-link:active {
@@ -589,7 +616,7 @@
         }
 
         .schedule-box {
-            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            background: #fed6d6;
             padding: 20px;
             border-radius: 12px;
         }
@@ -688,7 +715,7 @@
 
         /* CTA Section */
         .cta-section {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
+            background: #dc2626;
             color: white;
             padding: 60px 20px;
             text-align: center;
@@ -956,7 +983,7 @@
         <h2 class="section-title">Scegli la tua categoria di patente</h2>
         
         <!-- Avviso funzionalità WhatsApp -->
-        <div style="background: linear-gradient(135deg, #e0f2fe, #bae6fd); padding: 12px 18px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #0284c7;">
+        <div style="background: #cdecfd; padding: 12px 18px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #0284c7;">
             <p style="color: #0c4a6e; font-size: 14px; margin: 0; line-height: 1.5;">
                 <strong>💡 Suggerimento:</strong> Seleziona la patente che ti interessa e quando ci contatterai su WhatsApp, 
                 il messaggio sarà già precompilato con la tua scelta. Potrai poi aggiungere tutte le domande specifiche che desideri!
@@ -1010,7 +1037,7 @@
             <h2 class="section-title">📋 Documenti necessari per l'iscrizione</h2>
             
             <!-- Box spiegazione checkbox -->
-            <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); border: 2px solid #f59e0b; border-radius: 12px; padding: 15px; margin-bottom: 20px;">
+            <div style="background: #fdeca8; border: 2px solid #f59e0b; border-radius: 12px; padding: 15px; margin-bottom: 20px;">
                 <div style="display: flex; gap: 12px; align-items: start;">
                     <span style="font-size: 24px;">📌</span>
                     <div>
@@ -1214,15 +1241,24 @@
                 </div>
             </div>
 
-            <!-- Avviso importante sui 3 mesi -->
-            <div style="background: linear-gradient(90deg, #fbbf24, #f59e0b); border: 2px solid #dc2626; padding: 15px 20px; border-radius: 12px; margin-top: 20px; text-align: center;">
+            <!-- Avviso importante sui 3 mesi.
+                 ⚠️ Sfondo a TINTA PIENA e non a gradiente, di proposito: se un
+                 browser forza il tema scuro (vedi il <meta color-scheme> in
+                 testa), un gradiente lo tratta come un'immagine e NON lo
+                 inverte, mentre il testo lo inverte — e il marrone scuro su
+                 ambra diventava chiaro su chiaro, illeggibile. Con la tinta
+                 piena sfondo e testo si invertono insieme e il contrasto regge
+                 in entrambi i versi. Il #fbbf24 dà anche più contrasto col
+                 #7c2d12 (5,6:1) di quanto ne desse l'estremo destro del vecchio
+                 gradiente (#f59e0b, 4,4:1: sotto la soglia di accessibilità). -->
+            <div style="background-color: #fbbf24; border: 2px solid #dc2626; padding: 15px 20px; border-radius: 12px; margin-top: 20px; text-align: center;">
                 <p style="color: #7c2d12; font-weight: 700; font-size: 15px; margin: 0;">
                     ⚠️ <strong>IMPORTANTE: Porta il primo acconto entro 3 mesi dal completamento della checklist, altrimenti il certificato medico scade!</strong>
                 </p>
             </div>
 
             <!-- Avviso informazioni sotto il suggerimento -->
-            <div style="background: linear-gradient(135deg, #fee2e2, #fecaca); padding: 15px 20px; border-radius: 12px; margin-top: 20px; text-align: center;">
+            <div style="background: #fed6d6; padding: 15px 20px; border-radius: 12px; margin-top: 20px; text-align: center;">
                 <p style="color: #991b1b; font-weight: 600; font-size: 15px; margin: 0;">
                     📍 <strong>Hai bisogno di maggiori informazioni?</strong><br>
                     <span style="font-weight: 500;">Scrivici su WhatsApp o inviaci una mail - ti risponderemo subito!</span>
@@ -1294,7 +1330,7 @@
         </div>
 
         <!-- Sezione Contatti dedicata e prominente -->
-        <div style="background: linear-gradient(135deg, #ffffff, #f9fafb); padding: 60px 20px; margin: 0 -20px 40px -20px; box-shadow: 0 -5px 20px rgba(0,0,0,0.05), 0 5px 20px rgba(0,0,0,0.05);">
+        <div style="background: #fcfcfd; padding: 60px 20px; margin: 0 -20px 40px -20px; box-shadow: 0 -5px 20px rgba(0,0,0,0.05), 0 5px 20px rgba(0,0,0,0.05);">
             <h2 style="text-align: center; font-size: 32px; color: #1f2937; margin-bottom: 15px; font-weight: bold;">
                 💬 Scrivici su WhatsApp
             </h2>
@@ -1304,7 +1340,7 @@
             
             <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; max-width: 800px; margin: 0 auto;">
                 <!-- WhatsApp Bassano Grande -->
-                <a href="https://wa.me/390424523690" style="display: flex; flex-direction: column; align-items: center; padding: 30px; background: linear-gradient(135deg, #d1fae5, #a7f3d0); border-radius: 20px; text-decoration: none; transition: all 0.3s; flex: 1; min-width: 280px; box-shadow: 0 5px 15px rgba(16, 185, 129, 0.2);">
+                <a href="https://wa.me/390424523690" style="display: flex; flex-direction: column; align-items: center; padding: 30px; background: #bcf6da; border-radius: 20px; text-decoration: none; transition: all 0.3s; flex: 1; min-width: 280px; box-shadow: 0 5px 15px rgba(16, 185, 129, 0.2);">
                     <div style="width: 80px; height: 80px; background: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 40px; margin-bottom: 20px;">
                         📱
                     </div>
@@ -1316,7 +1352,7 @@
                 </a>
 
                 <!-- WhatsApp Cartigliano Grande -->
-                <a href="https://wa.me/393474964047" style="display: flex; flex-direction: column; align-items: center; padding: 30px; background: linear-gradient(135deg, #d1fae5, #a7f3d0); border-radius: 20px; text-decoration: none; transition: all 0.3s; flex: 1; min-width: 280px; box-shadow: 0 5px 15px rgba(16, 185, 129, 0.2);">
+                <a href="https://wa.me/393474964047" style="display: flex; flex-direction: column; align-items: center; padding: 30px; background: #bcf6da; border-radius: 20px; text-decoration: none; transition: all 0.3s; flex: 1; min-width: 280px; box-shadow: 0 5px 15px rgba(16, 185, 129, 0.2);">
                     <div style="width: 80px; height: 80px; background: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 40px; margin-bottom: 20px;">
                         📱
                     </div>
@@ -1340,7 +1376,7 @@
     </div>
 
     <!-- Footer semplice -->
-    <footer style="background: linear-gradient(135deg, #ef4444, #dc2626); color: white; padding: 30px 20px; text-align: center;">
+    <footer style="background: #dc2626; color: white; padding: 30px 20px; text-align: center;">
         <div style="max-width: 1200px; margin: 0 auto;">
             <p style="font-size: 16px; margin-bottom: 10px; font-weight: 600;">
                 © 2025 Autoscuola ABA - Bassano del Grappa e Cartigliano
